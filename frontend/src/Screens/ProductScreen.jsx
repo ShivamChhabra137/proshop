@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
-import products from '../products'
+import axios from "axios"
 import { Link } from "react-router-dom"
 import { Row, Col, Image, Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 import Rating from '../components/Rating'
@@ -9,12 +9,26 @@ import Rating from '../components/Rating'
 const ProductScreen = () => {
 
     const { id: productId } = useParams()
-    const product = products.find(p => p._id === productId)
+
+    const [product,setProduct] = useState()
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const {data} = await axios.get(`/api/products/${productId}`)
+            setProduct(data)
+        }
+        fetchProduct()
+    },[productId])
+
+    // const product = products.find(p => p._id === productId)
 
 
   return (
     <>
-    <Link className='btn btn-light my-3' to='/' >Go Back</Link>
+    {product ? 
+    (
+        <>
+        <Link className='btn btn-light my-3' to='/' >Go Back</Link>
     <Row>
         <Col md={5}>
             <Image src={product.image} alt={product.name} fluid/>
@@ -67,6 +81,12 @@ const ProductScreen = () => {
             </Card>
         </Col>
     </Row>
+        </>
+    )
+    : <div>
+        <h1>404 Page Not Found!</h1>
+        </div>}
+    
     </>
   )
 }
