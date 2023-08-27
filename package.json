@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/ShivamChhabra137/proshop#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
